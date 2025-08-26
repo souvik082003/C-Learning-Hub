@@ -1,81 +1,83 @@
-🔥 C & C++ Learning Hub 🔥
+# 🔥 C & C++ Learning Hub 🔥
 
-Ready to conquer the world of C and C++? You've come to the right place! 🚀
+Ready to conquer the world of **C and C++**?  
+You've come to the right place! 🚀  
 
-The C & C++ Learning Hub is an all-in-one, interactive platform built to launch your programming journey. Forget boring textbooks! Here, you'll learn by doing, with a powerful two-panel layout that puts theory and practice side-by-side. Learn a concept, then immediately crush the code.
+The **C & C++ Learning Hub** is an all-in-one, interactive platform built to launch your programming journey. Forget boring textbooks — here, you'll **learn by doing**, with a powerful **dual-panel layout** that puts theory and practice side-by-side. Learn a concept, then immediately crush the code. 💻⚡
 
-🌟 Awesome Features 🌟
-Dual-Zone Interface: Master concepts in the "Theory Zone" 🧠 and immediately apply them in the "Practice Zone" 💻.
+---
 
-Epic Topic Coverage: We've got everything a beginner needs, from the absolute basics like Algorithms and Variables to mind-bending topics like Pointers and Recursion.
+## 🌟 Features
 
-Pro-Level Code Editor: Write code in the slick Monaco Editor (the heart of VS Code!), with full syntax highlighting for both C and C++.
+✅ **Dual-Zone Interface** → Master concepts in the *Theory Zone* 🧠 and immediately apply them in the *Practice Zone* 💻.  
+✅ **Epic Topic Coverage** → Everything from basics (Algorithms, Variables) to mind-bending topics (Pointers, Recursion).  
+✅ **Pro-Level Code Editor** → Built with the Monaco Editor (the heart of VS Code!) with full syntax highlighting for C & C++.  
+✅ **Instant Code Execution** → Powered by the Judge0 API. Just hit **Run** and see your code come alive.  
+✅ **C vs. C++ Showdown** → Instantly switch between examples to compare both languages.  
+✅ **Day & Night Modes** → Code comfortably with a built-in theme toggle ☀️🌙.  
 
-Instant Code Execution: No setup, no hassle. Smash the "Run" button and see your code come to life instantly, powered by the mighty Judge0 API.
+---
 
-C vs. C++ Showdown: Instantly switch between C and C++ examples to see how each language tackles the same problem.
+## 🛠️ Installation & Setup
 
-Day & Night Modes: Code in comfort, whether you're an early bird or a night owl, with a cool theme toggle. ☀️🌙
+Follow these steps to get the project running locally:
 
-
-
-🛠️ Get Set Up & Ready to Launch!
-Time to get this beast running on your local machine. Follow these simple steps.
-
-1. The Essentials
-First, make sure you have Node.js installed. It's the fuel for our backend server. Open your terminal and type:
-
+### 1. Install Node.js
+Make sure you have **Node.js** installed:  
+```bash
 node -v
+```
+Open backend/server.js and replace:
 
-If you see a version number (like v20.11.0), you're a champion! If not, grab it from the official Node.js website.
+const JUDGE0_API_KEY = process.env.JUDGE0_API_KEY || 'PASTE_YOUR_AWESOME_KEY_HERE';
 
-2. Power Up the Backend
-Let's get the server engine roaring.
+If you don’t see a version, [download Node.js here](https://nodejs.org/).
 
-Jump into the backend directory:
-
+Backend Setup
+```bash
 cd backend
-
-Install the power-ups:
-
 npm install
+```
+This installs required dependencies: express, cors, and axios.
 
-This command summons express, cors, and axios to our cause.
-
-3. Unleash the API Power!
-Our code execution is handled by the legendary Judge0 API. You need a secret key to unlock its power.
-
-Head over to the Judge0 CE API page on RapidAPI.
-
-Hit "Subscribe to Test" and grab the free Basic plan.
-
-On the "Endpoints" tab, you'll find your secret X-RapidAPI-Key in the code examples. Copy it!
-
-Open backend/server.js and paste your key where it says 'YOUR_RAPIDAPI_KEY'.
-
-
-// Inside backend/server.js
-const JUDGE0_API_KEY = process.env.JUDGE0_API_KEY || 'PASTE_YOUR_AWESOME_KEY_HERE'; 
-
-
-🚀 Let's Go! How to Run the Project
-Ignite the Server:
-
-In your terminal, make sure you're inside the backend folder.
-
-Unleash the server with this command:
-
+Configure Judge0 API
+We use the Judge0 CE API for code execution.
+Go to [Judge0 CE API on RapidAPI](https://rapidapi.com/judge0-official/api/judge0-ce/).
+Click "Subscribe to Test" (choose the free Basic plan).
+Copy your X-RapidAPI-Key.
+Open backend/server.js and replace:
+```bash
+const JUDGE0_API_KEY = process.env.JUDGE0_API_KEY || 'PASTE_YOUR_AWESOME_KEY_HERE';
+```
+Run the Backend
+```bash
 node server.js
+```
+If successful, you’ll see:
+Server is running on http://localhost:3000
+---
 
-You'll see Server is running on http://localhost:3000. Don't close this terminal!
+## Run the Frontend
 
-Launch the Website:
+Open the frontend folder.
 
-Go to the frontend folder.
+Double-click index.html.
 
-Double-click index.html. It will open right in your browser.
+The website will open in your browser 🎉.
 
-You are now ready to start your coding adventure. Go build something amazing!
+---
 
-Happy Coding! Let the learning begin! 🎉
+## 🤝 Contributing
+
+Contributions are welcome!
+
+Fork the repo 🍴
+
+Create a new branch: git checkout -b feature-xyz
+
+Commit changes: git commit -m "Added feature xyz"
+
+Push: git push origin feature-xyz
+
+Open a Pull Request ✅
 
