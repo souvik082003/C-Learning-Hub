@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C & C++ Learning Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/editor/editor.main.css">
+    <style>
+        :root {
+            --primary-bg: #1a1a1a;
+            --secondary-bg: #2a2a2a;
+            --text-color: #e0e0e0;
+            --accent-color: #4a90e2;
+            --border-color: #444;
+        }
+        html.light {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f0f0f0;
+            --text-color: #333333;
+            --accent-color: #007acc;
+            --border-color: #ddd;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .resizable-panel {
+            resize: horizontal;
+            overflow: auto;
+        }
+        #editor {
+            height: 350px; 
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        .output-console, .input-console {
+            background-color: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        .sidebar-link.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark">
+
+    <div class="flex flex-col h-screen">
+        <!-- Header -->
+        <header class="bg-secondary-bg border-b border-border-color p-4 flex justify-between items-center shadow-md">
+            <h1 class="text-2xl font-bold text-accent-color">C & C++ Learning Hub</h1>
+            <button id="theme-toggle" class="px-4 py-2 bg-accent-color text-white rounded-lg hover:bg-opacity-80 transition">
+                Toggle Mode
+            </button>
+        </header>
+
+        <div class="flex flex-1 overflow-hidden">
+            <!-- Sidebar -->
+            <aside id="sidebar" class="w-64 bg-secondary-bg p-4 border-r border-border-color overflow-y-auto">
+                <h2 class="text-lg font-semibold mb-4">Topics</h2>
+                <nav id="topic-list" class="space-y-2">
+                    <!-- Topics will be dynamically inserted here -->
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 flex overflow-hidden">
+                <!-- Left Panel: Theory Zone -->
+                <div id="theory-zone" class="w-1/2 p-6 overflow-y-auto resizable-panel border-r border-border-color">
+                    <!-- Welcome Screen -->
+                    <div id="welcome-screen" class="text-center flex flex-col items-center justify-center h-full">
+                        <h2 class="text-4xl font-bold mb-4 text-accent-color">Welcome to the Learning Hub!</h2>
+                        <div class="bg-secondary-bg p-6 rounded-lg max-w-2xl mx-auto mb-8 border border-border-color">
+                            <p class="text-lg mb-4 italic">"Hey there! As 2nd-year CSE students, our biggest tip is: don’t just read — code. Break problems into smaller parts, write simple programs for each topic you learn, and embrace errors as valuable lessons. They are the best teachers on your journey. Wishing you the very best!"</p>
+                        </div>
+                        <button id="get-started-btn" class="px-8 py-3 bg-accent-color text-white font-bold rounded-lg hover:bg-opacity-80 transition text-xl">
+                            Get Started
+                        </button>
+                    </div>
+
+                    <!-- Topic Content -->
+                     <div id="topic-content" class="hidden">
+                        <h2 class="text-3xl font-bold mb-4 text-accent-color" id="topic-title">Welcome!</h2>
+                        <p id="topic-explanation">Select a topic from the sidebar to get started.</p>
+                        <div id="topic-syntax-container" class="hidden mt-4">
+                            <h3 class="text-xl font-semibold mt-6 mb-2">Syntax / Common Symbols</h3>
+                            <pre class="bg-gray-800 text-white p-4 rounded-lg"><code id="topic-syntax"></code></pre>
+                        </div>
+                        <div id="topic-example-container" class="hidden mt-4">
+                            <h3 class="text-xl font-semibold mt-6 mb-2">Example</h3>
+                            <pre class="bg-gray-800 text-white p-4 rounded-lg"><code id="topic-example"></code></pre>
+                        </div>
+                         <div id="topic-tldr-container" class="hidden mt-4">
+                            <h3 class="text-xl font-semibold mt-6 mb-2">TL;DR</h3>
+                            <p class="bg-yellow-900 bg-opacity-30 p-4 rounded-lg border-l-4 border-yellow-500" id="topic-tldr"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Practice Zone -->
+                <div class="w-1/2 p-6 flex flex-col overflow-y-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-2xl font-bold">Practice Zone</h2>
+                        <div class="flex items-center space-x-4">
+                            <select id="language-select" class="bg-secondary-bg border border-border-color rounded-md px-3 py-2">
+                                <option value="c">C</option>
+                                <option value="cpp">C++</option>
+                            </select>
+                            <button id="run-btn" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                                Run Code
+                            </button>
+                        </div>
+                    </div>
+                    <div id="editor"></div>
+                    
+                   
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Input (stdin)</h3>
+                    <textarea id="stdin-input" class="input-console w-full h-24 p-2 font-mono text-sm" placeholder="Enter input for your program here..."></textarea>
+
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Output</h3>
+                    <div id="output-console" class="output-console flex-1 p-4 font-mono text-sm whitespace-pre-wrap"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/loader.js"></script>
+    <script>
+        let editor;
+        let topicsData = {};
+        let currentTopicId = null;
+
+        // Monaco Editor Setup
+        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs' }});
+        require(['vs/editor/editor.main'], function() {
+            editor = monaco.editor.create(document.getElementById('editor'), {
+                value: `// Select a topic and language to start coding!`,
+                language: 'c',
+                theme: 'vs-dark',
+                automaticLayout: true,
+            });
+        });
+
+        // --- DOM Element References ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const topicList = document.getElementById('topic-list');
+        const languageSelect = document.getElementById('language-select');
+        const runBtn = document.getElementById('run-btn');
+        const outputConsole = document.getElementById('output-console');
+        const stdinInput = document.getElementById('stdin-input'); // New reference for the input box
+        
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const topicContent = document.getElementById('topic-content');
+        const getStartedBtn = document.getElementById('get-started-btn');
+
+        const topicTitle = document.getElementById('topic-title');
+        const topicExplanation = document.getElementById('topic-explanation');
+        const topicSyntaxContainer = document.getElementById('topic-syntax-container');
+        const topicSyntax = document.getElementById('topic-syntax');
+        const topicExampleContainer = document.getElementById('topic-example-container');
+        const topicExample = document.getElementById('topic-example');
+        const topicTldrContainer = document.getElementById('topic-tldr-container');
+        const topicTldr = document.getElementById('topic-tldr');
+
+
+        // Event Listeners
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('light');
+            const theme = document.documentElement.classList.contains('light') ? 'vs-light' : 'vs-dark';
+            monaco.editor.setTheme(theme);
+        });
+
+        getStartedBtn.addEventListener('click', () => {
+            welcomeScreen.classList.add('hidden');
+            topicContent.classList.remove('hidden');
+        });
+
+        languageSelect.addEventListener('change', updateEditorSnippet);
+        runBtn.addEventListener('click', executeCode);
+
+        // Core Functions
+
+        /*
+         * Loads topics from the backend API.
+         */
+        async function loadTopics() {
+            try {
+                const res = await fetch('http://localhost:3000/api/topics');
+                if (!res.ok) throw new Error("Failed to fetch topics");
+                topicsData = await res.json();
+                renderTopicList();
+            } catch (err) {
+                console.error("Error loading topics:", err);
+            }
+        }
+
+        
+         //  Renders the list of topics in the sidebar.
+         
+        function renderTopicList() {
+            topicList.innerHTML = ''; // Clear existing list
+            for (const id in topicsData) {
+                const topic = topicsData[id];
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = topic.title;
+                link.dataset.topicId = id;
+                link.className = 'block sidebar-link px-4 py-2 rounded-lg hover:bg-accent-color hover:text-white transition';
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    displayTopic(id);
+                });
+                topicList.appendChild(link);
+            }
+        }
+
+    
+        function displayTopic(topicId) {
+            currentTopicId = topicId;
+            const topic = topicsData[topicId];
+            if (!topic) return;
+
+            // Show topic content and hide welcome screen
+            welcomeScreen.classList.add('hidden');
+            topicContent.classList.remove('hidden');
+
+            // Update active link in sidebar
+            document.querySelectorAll('#topic-list a').forEach(link => {
+                link.classList.toggle('active', link.dataset.topicId === topicId);
+            });
+
+            // Update theory zone
+            topicTitle.textContent = topic.title;
+            topicExplanation.innerHTML = topic.explanation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // For bold text
+
+            if (topic.syntax) {
+                const lang = languageSelect.value;
+                topicSyntax.textContent = topic.syntax[lang] || topic.syntax.c;
+                topicSyntaxContainer.classList.remove('hidden');
+            } else {
+                topicSyntaxContainer.classList.add('hidden');
+            }
+
+            if (topic.example) {
+                const lang = languageSelect.value;
+                const exampleContent = topic.example[lang] || topic.example.c;
+                topicExample.textContent = exampleContent;
+                topicExampleContainer.classList.remove('hidden');
+            } else {
+                topicExampleContainer.classList.add('hidden');
+            }
+            
+            if (topic.tldr) {
+                topicTldr.textContent = topic.tldr;
+                topicTldrContainer.classList.remove('hidden');
+            } else {
+                topicTldrContainer.classList.add('hidden');
+            }
+
+            // Update practice zone
+            updateEditorSnippet();
+        }
+
+        
+         
+         
+        function updateEditorSnippet() {
+            if (!currentTopicId) {
+                 editor.setValue(`// Select a topic to see an example.`);
+                return;
+            };
+            const topic = topicsData[currentTopicId];
+            const lang = languageSelect.value; // c or cpp
+            
+            if (topic && topic.example && topic.example[lang]) {
+                const snippet = topic.example[lang];
+                editor.setValue(snippet);
+                const model = editor.getModel();
+                if (model) {
+                    monaco.editor.setModelLanguage(model, lang === 'cpp' ? 'cpp' : 'c');
+                }
+            }
+        }
+
+        
+        async function executeCode() {
+            const code = editor.getValue();
+            const language = languageSelect.value;
+            const languageId = language === 'cpp' ? 54 : 50; 
+            const stdin = stdinInput.value; 
+
+            runBtn.disabled = true;
+            runBtn.textContent = 'Running...';
+            outputConsole.textContent = 'Executing...';
+
+            try {
+                // This is the REAL fetch call to your backend server
+                const response = await fetch('http://localhost:3000/api/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, language_id: languageId, stdin: stdin }) // Send stdin to backend
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Execution failed.');
+                }
+                
+                const result = await response.json();
+
+                let output = '';
+                if (result.stdout) output += result.stdout;
+                if (result.stderr) output += `Error: ${result.stderr}`;
+                if (result.compile_output) output += `Compiler Error: ${result.compile_output}`;
+                if (result.message) output += `Message: ${result.message}`;
+                
+                outputConsole.textContent = output || 'Execution finished with no output.';
+
+            } catch (error) {
+                outputConsole.textContent = `An error occurred: ${error.message}`;
+            } finally {
+                runBtn.disabled = false;
+                runBtn.textContent = 'Run Code';
+            }
+        }
+
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', loadTopics);
+
+    </script>
+</body>
+</html>
