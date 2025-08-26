@@ -1,4 +1,5 @@
 🔥 C & C++ Learning Hub 🔥
+
 Ready to conquer the world of C and C++? You've come to the right place! 🚀
 
 The C & C++ Learning Hub is an all-in-one, interactive platform built to launch your programming journey. Forget boring textbooks! Here, you'll learn by doing, with a powerful two-panel layout that puts theory and practice side-by-side. Learn a concept, then immediately crush the code.
@@ -77,3 +78,4 @@ Double-click index.html. It will open right in your browser.
 You are now ready to start your coding adventure. Go build something amazing!
 
 Happy Coding! Let the learning begin! 🎉
+
