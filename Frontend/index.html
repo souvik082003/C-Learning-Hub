@@ -45,6 +45,10 @@
             background-color: var(--accent-color);
             color: white;
         }
+        .nav-link.active {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,81 +57,115 @@
 <body class="dark">
 
     <div class="flex flex-col h-screen">
-        <!-- Header -->
         <header class="bg-secondary-bg border-b border-border-color p-4 flex justify-between items-center shadow-md">
             <h1 class="text-2xl font-bold text-accent-color">C & C++ Learning Hub</h1>
+            
+            <nav class="flex items-center space-x-6">
+                <a href="#" id="home-link" class="nav-link text-lg hover:text-accent-color transition active">Home</a>
+                <a href="#" id="upload-link" class="nav-link text-lg hover:text-accent-color transition">Upload</a>
+                <a href="#" id="community-link" class="nav-link text-lg hover:text-accent-color transition">Community</a>
+            </nav>
+
             <button id="theme-toggle" class="px-4 py-2 bg-accent-color text-white rounded-lg hover:bg-opacity-80 transition">
                 Toggle Mode
             </button>
         </header>
 
-        <div class="flex flex-1 overflow-hidden">
-            <!-- Sidebar -->
-            <aside id="sidebar" class="w-64 bg-secondary-bg p-4 border-r border-border-color overflow-y-auto">
-                <h2 class="text-lg font-semibold mb-4">Topics</h2>
-                <nav id="topic-list" class="space-y-2">
-                    <!-- Topics will be dynamically inserted here -->
-                </nav>
-            </aside>
+        <div class="flex-1 overflow-y-auto">
 
-            <!-- Main Content -->
-            <main class="flex-1 flex overflow-hidden">
-                <!-- Left Panel: Theory Zone -->
-                <div id="theory-zone" class="w-1/2 p-6 overflow-y-auto resizable-panel border-r border-border-color">
-                    <!-- Welcome Screen -->
-                    <div id="welcome-screen" class="text-center flex flex-col items-center justify-center h-full">
-                        <h2 class="text-4xl font-bold mb-4 text-accent-color">Welcome to the Learning Hub!</h2>
-                        <div class="bg-secondary-bg p-6 rounded-lg max-w-2xl mx-auto mb-8 border border-border-color">
-                            <p class="text-lg mb-4 italic">"Hey there! As 2nd-year CSE students, our biggest tip is: don’t just read — code. Break problems into smaller parts, write simple programs for each topic you learn, and embrace errors as valuable lessons. They are the best teachers on your journey. Wishing you the very best!"</p>
-                        </div>
-                        <button id="get-started-btn" class="px-8 py-3 bg-accent-color text-white font-bold rounded-lg hover:bg-opacity-80 transition text-xl">
-                            Get Started
-                        </button>
-                    </div>
+            <div id="learning-zone" class="flex flex-1 overflow-hidden h-full">
+                <aside id="sidebar" class="w-64 bg-secondary-bg p-4 border-r border-border-color overflow-y-auto">
+                    <h2 class="text-lg font-semibold mb-4">Topics</h2>
+                    <nav id="topic-list" class="space-y-2">
+                        </nav>
+                </aside>
 
-                    <!-- Topic Content -->
-                     <div id="topic-content" class="hidden">
-                        <h2 class="text-3xl font-bold mb-4 text-accent-color" id="topic-title">Welcome!</h2>
-                        <p id="topic-explanation">Select a topic from the sidebar to get started.</p>
-                        <div id="topic-syntax-container" class="hidden mt-4">
-                            <h3 class="text-xl font-semibold mt-6 mb-2">Syntax / Common Symbols</h3>
-                            <pre class="bg-gray-800 text-white p-4 rounded-lg"><code id="topic-syntax"></code></pre>
-                        </div>
-                        <div id="topic-example-container" class="hidden mt-4">
-                            <h3 class="text-xl font-semibold mt-6 mb-2">Example</h3>
-                            <pre class="bg-gray-800 text-white p-4 rounded-lg"><code id="topic-example"></code></pre>
-                        </div>
-                         <div id="topic-tldr-container" class="hidden mt-4">
-                            <h3 class="text-xl font-semibold mt-6 mb-2">TL;DR</h3>
-                            <p class="bg-yellow-900 bg-opacity-30 p-4 rounded-lg border-l-4 border-yellow-500" id="topic-tldr"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Panel: Practice Zone -->
-                <div class="w-1/2 p-6 flex flex-col overflow-y-auto">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-2xl font-bold">Practice Zone</h2>
-                        <div class="flex items-center space-x-4">
-                            <select id="language-select" class="bg-secondary-bg border border-border-color rounded-md px-3 py-2">
-                                <option value="c">C</option>
-                                <option value="cpp">C++</option>
-                            </select>
-                            <button id="run-btn" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                                Run Code
+                <main class="flex-1 flex overflow-hidden">
+                    <div id="theory-zone" class="w-1/2 p-6 overflow-y-auto resizable-panel border-r border-border-color">
+                        <div id="welcome-screen" class="text-center flex flex-col items-center justify-center h-full">
+                            <h2 class="text-4xl font-bold mb-4 text-accent-color">Welcome to the Learning Hub!</h2>
+                             <div class="bg-secondary-bg p-6 rounded-lg max-w-2xl mx-auto mb-8 border border-border-color">
+                                 <p class="text-lg mb-4 italic">"Hey there! As 2nd-year CSE students, our biggest tip is: don't just read — code. Break problems into smaller parts, write simple programs for each topic you learn, and embrace errors as valuable lessons. They are the best teachers on your journey. Wishing you the very best!"</p>
+                             </div>
+                            <button id="get-started-btn" class="px-8 py-3 bg-accent-color text-white font-bold rounded-lg hover:bg-opacity-80 transition text-xl">
+                                Get Started
                             </button>
                         </div>
-                    </div>
-                    <div id="editor"></div>
-                    
-                   
-                    <h3 class="text-xl font-semibold mt-4 mb-2">Input (stdin)</h3>
-                    <textarea id="stdin-input" class="input-console w-full h-24 p-2 font-mono text-sm" placeholder="Enter input for your program here..."></textarea>
 
-                    <h3 class="text-xl font-semibold mt-4 mb-2">Output</h3>
-                    <div id="output-console" class="output-console flex-1 p-4 font-mono text-sm whitespace-pre-wrap"></div>
-                </div>
-            </main>
+                        <div id="topic-content" class="hidden">
+                             <h2 class="text-3xl font-bold mb-4 text-accent-color" id="topic-title">Welcome!</h2>
+                             <p id="topic-explanation">Select a topic from the sidebar to get started.</p>
+                             <div id="topic-syntax-container" class="hidden mt-4">
+                                 <h3 class="text-xl font-semibold mt-6 mb-2">Syntax / Common Symbols</h3>
+                                 <pre class="bg-gray-800 text-white p-4 rounded-lg"><code id="topic-syntax"></code></pre>
+                             </div>
+                             <div id="topic-example-container" class="hidden mt-4">
+                                 <h3 class="text-xl font-semibold mt-6 mb-2">Example</h3>
+                                 <pre class="bg-gray-800 text-white p-4 rounded-lg"><code id="topic-example"></code></pre>
+                             </div>
+                              <div id="topic-tldr-container" class="hidden mt-4">
+                                 <h3 class="text-xl font-semibold mt-6 mb-2">TL;DR</h3>
+                                 <p class="bg-yellow-900 bg-opacity-30 p-4 rounded-lg border-l-4 border-yellow-500" id="topic-tldr"></p>
+                             </div>
+                         </div>
+                    </div>
+
+                    <div class="w-1/2 p-6 flex flex-col overflow-y-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-2xl font-bold">Practice Zone</h2>
+                            <div class="flex items-center space-x-4">
+                                <select id="language-select" class="bg-secondary-bg border border-border-color rounded-md px-3 py-2">
+                                    <option value="c">C</option>
+                                    <option value="cpp">C++</option>
+                                </select>
+                                <button id="run-btn" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                                    Run Code
+                                </button>
+                            </div>
+                        </div>
+                        <div id="editor"></div>
+                        
+                        
+                        <h3 class="text-xl font-semibold mt-4 mb-2">Input (stdin)</h3>
+                        <textarea id="stdin-input" class="input-console w-full h-24 p-2 font-mono text-sm" placeholder="Enter input for your program here..."></textarea>
+
+                        <h3 class="text-xl font-semibold mt-4 mb-2">Output</h3>
+                        <div id="output-console" class="output-console flex-1 p-4 font-mono text-sm whitespace-pre-wrap"></div>
+                    </div>
+                </main>
+            </div>
+
+            <div id="upload-zone" class="hidden p-8">
+    <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-4 text-accent-color">Upload Your question</h2>
+        <p class="mb-8 text-lg">Upload your question file here</p>
+        <div class="bg-secondary-bg p-8 rounded-lg border border-border-color">
+            <input type="file" id="file-upload-input" class="block w-full text-sm text-gray-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-full file:border-0
+                file:text-sm file:font-semibold
+                file:bg-indigo-600 file:text-white file:hover:bg-indigo-700
+                hover:file:bg-opacity-80" accept=".c,.cpp,.txt">
+        </div>
+        <p id="upload-status" class="mt-4 text-green-400"></p>
+    </div>
+</div>
+
+            <div id="community-zone" class="hidden p-6 flex flex-col h-full">
+                 <h2 class="text-3xl font-bold mb-4 text-accent-color text-center">Contribute To The Community</h2>
+                 <div class="flex-1 bg-secondary-bg border border-border-color rounded-lg p-4 flex flex-col overflow-hidden">
+                    <div id="chat-messages" class="flex-1 space-y-4 overflow-y-auto mb-4 pr-2">
+                         <div class="p-3 rounded-lg bg-gray-700 max-w-md">
+                            <p class="font-bold text-accent-color">Bot</p>
+                            <p>Welcome to the community chat! Feel free to discuss topics or ask questions.</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <input type="text" id="chat-input" placeholder="Type a message..." class="flex-1 p-2 rounded-lg bg-primary-bg border border-border-color focus:outline-none focus:ring-2 focus:ring-accent-color">
+                        <button id="chat-send-btn" class="px-6 py-2 bg-accent-color text-white rounded-lg hover:bg-opacity-80 transition">Send</button>
+                    </div>
+                 </div>
+            </div>
         </div>
     </div>
 
@@ -154,7 +192,7 @@
         const languageSelect = document.getElementById('language-select');
         const runBtn = document.getElementById('run-btn');
         const outputConsole = document.getElementById('output-console');
-        const stdinInput = document.getElementById('stdin-input'); // New reference for the input box
+        const stdinInput = document.getElementById('stdin-input'); 
         
         const welcomeScreen = document.getElementById('welcome-screen');
         const topicContent = document.getElementById('topic-content');
@@ -169,11 +207,28 @@
         const topicTldrContainer = document.getElementById('topic-tldr-container');
         const topicTldr = document.getElementById('topic-tldr');
 
+        // --- NEW DOM ELEMENT REFERENCES ---
+        const homeLink = document.getElementById('home-link');
+        const uploadLink = document.getElementById('upload-link');
+        const communityLink = document.getElementById('community-link');
 
-        // Event Listeners
+        const learningZone = document.getElementById('learning-zone');
+        const uploadZone = document.getElementById('upload-zone');
+        const communityZone = document.getElementById('community-zone');
+
+        const fileUploadInput = document.getElementById('file-upload-input');
+        const uploadStatus = document.getElementById('upload-status');
+        
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSendBtn = document.getElementById('chat-send-btn');
+
+
+        // --- Event Listeners ---
         themeToggle.addEventListener('click', () => {
             document.documentElement.classList.toggle('light');
-            const theme = document.documentElement.classList.contains('light') ? 'vs-light' : 'vs-dark';
+            document.body.classList.toggle('dark', !document.documentElement.classList.contains('light'));
+            const theme = document.documentElement.classList.contains('light') ? 'vs' : 'vs-dark';
             monaco.editor.setTheme(theme);
         });
 
@@ -185,11 +240,34 @@
         languageSelect.addEventListener('change', updateEditorSnippet);
         runBtn.addEventListener('click', executeCode);
 
-        // Core Functions
+        // --- NEW EVENT LISTENERS ---
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showMainContent('learning-zone');
+        });
 
-        /*
-         * Loads topics from the backend API.
-         */
+        uploadLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showMainContent('upload-zone');
+        });
+        
+        communityLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showMainContent('community-zone');
+        });
+        
+        fileUploadInput.addEventListener('change', handleFileUpload);
+        
+        chatSendBtn.addEventListener('click', sendChatMessage);
+        chatInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        });
+
+
+        // --- Core Functions (Your original functions are untouched) ---
+
         async function loadTopics() {
             try {
                 const res = await fetch('http://localhost:3000/api/topics');
@@ -200,12 +278,9 @@
                 console.error("Error loading topics:", err);
             }
         }
-
         
-         //  Renders the list of topics in the sidebar.
-         
         function renderTopicList() {
-            topicList.innerHTML = ''; // Clear existing list
+            topicList.innerHTML = '';
             for (const id in topicsData) {
                 const topic = topicsData[id];
                 const link = document.createElement('a');
@@ -220,25 +295,21 @@
                 topicList.appendChild(link);
             }
         }
-
     
         function displayTopic(topicId) {
             currentTopicId = topicId;
             const topic = topicsData[topicId];
             if (!topic) return;
 
-            // Show topic content and hide welcome screen
             welcomeScreen.classList.add('hidden');
             topicContent.classList.remove('hidden');
 
-            // Update active link in sidebar
             document.querySelectorAll('#topic-list a').forEach(link => {
                 link.classList.toggle('active', link.dataset.topicId === topicId);
             });
 
-            // Update theory zone
             topicTitle.textContent = topic.title;
-            topicExplanation.innerHTML = topic.explanation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // For bold text
+            topicExplanation.innerHTML = topic.explanation.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
 
             if (topic.syntax) {
                 const lang = languageSelect.value;
@@ -264,20 +335,16 @@
                 topicTldrContainer.classList.add('hidden');
             }
 
-            // Update practice zone
             updateEditorSnippet();
         }
-
         
-         
-         
         function updateEditorSnippet() {
             if (!currentTopicId) {
                  editor.setValue(`// Select a topic to see an example.`);
-                return;
+                 return;
             };
             const topic = topicsData[currentTopicId];
-            const lang = languageSelect.value; // c or cpp
+            const lang = languageSelect.value; 
             
             if (topic && topic.example && topic.example[lang]) {
                 const snippet = topic.example[lang];
@@ -289,7 +356,6 @@
             }
         }
 
-        
         async function executeCode() {
             const code = editor.getValue();
             const language = languageSelect.value;
@@ -301,11 +367,10 @@
             outputConsole.textContent = 'Executing...';
 
             try {
-                // This is the REAL fetch call to your backend server
                 const response = await fetch('http://localhost:3000/api/run', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ code, language_id: languageId, stdin: stdin }) // Send stdin to backend
+                    body: JSON.stringify({ code, language_id: languageId, stdin: stdin })
                 });
 
                 if (!response.ok) {
@@ -330,9 +395,102 @@
                 runBtn.textContent = 'Run Code';
             }
         }
+        
+        // --- NEW FUNCTIONS ---
+
+        /**
+         * Hides all main content zones and shows the one with the given ID.
+         */
+        function showMainContent(zoneId) {
+            // Hide all zones
+            learningZone.classList.add('hidden');
+            uploadZone.classList.add('hidden');
+            communityZone.classList.add('hidden');
+            
+            // Deactivate all nav links
+            homeLink.classList.remove('active');
+            uploadLink.classList.remove('active');
+            communityLink.classList.remove('active');
+
+            // Show the selected zone and activate the corresponding link
+            if (zoneId === 'learning-zone') {
+                learningZone.classList.remove('hidden');
+                homeLink.classList.add('active');
+            } else if (zoneId === 'upload-zone') {
+                uploadZone.classList.remove('hidden');
+                uploadLink.classList.add('active');
+            } else if (zoneId === 'community-zone') {
+                communityZone.classList.remove('hidden');
+                communityLink.classList.add('active');
+            }
+        }
+
+        /**
+         * Handles the file upload input change event.
+         */
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const content = e.target.result;
+                editor.setValue(content);
+                uploadStatus.textContent = `Successfully loaded ${file.name}! Redirecting to Home...`;
+
+                // Automatically switch back to the main editor view
+                setTimeout(() => {
+                    showMainContent('learning-zone');
+                    uploadStatus.textContent = '';
+                    fileUploadInput.value = ''; // Reset file input
+                }, 2000);
+            };
+            reader.onerror = () => {
+                uploadStatus.textContent = `Error reading file: ${file.name}`;
+                uploadStatus.classList.remove('text-green-400');
+                uploadStatus.classList.add('text-red-400');
+            };
+            reader.readAsText(file);
+        }
+
+        /**
+         * Simulates sending a chat message on the community page.
+         */
+        function sendChatMessage() {
+            const messageText = chatInput.value.trim();
+            if (messageText === '') return;
+
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('p-3', 'rounded-lg', 'bg-accent-color', 'max-w-md', 'ml-auto'); // 'ml-auto' aligns to the right
+            
+            const userElement = document.createElement('p');
+            userElement.classList.add('font-bold', 'text-white');
+            userElement.textContent = 'You';
+
+            const textElement = document.createElement('p');
+            textElement.textContent = messageText;
+
+            messageElement.appendChild(userElement);
+            messageElement.appendChild(textElement);
+            
+            chatMessages.appendChild(messageElement);
+            
+            chatInput.value = ''; // Clear input
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+            chatInput.focus();
+        }
+
 
         // --- Initial Load ---
-        document.addEventListener('DOMContentLoaded', loadTopics);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTopics();
+            // Ensure the dark class is on the body if the html doesn't have light.
+            if (!document.documentElement.classList.contains('light')) {
+                 document.body.classList.add('dark');
+            }
+        });
 
     </script>
 </body>
