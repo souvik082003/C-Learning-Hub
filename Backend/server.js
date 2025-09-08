@@ -14,6 +14,8 @@ app.use(cors());
 app.use(express.json()); // Parse JSON request bodies
 
 // ✅ Serve frontend files (make sure "Frontend" matches your folder name exactly!)
+console.log("Serving frontend from:", path.resolve(__dirname, '../Frontend'));
+
 app.use(express.static(path.resolve(__dirname, '../Frontend/index.html')));
 
 let topicsCache = null;
