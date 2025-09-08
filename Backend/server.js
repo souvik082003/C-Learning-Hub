@@ -12,12 +12,13 @@ const PORT = process.env.PORT || 3000;
 // --- Middleware ---
 app.use(cors()); 
 app.use(express.json()); // Parse JSON request bodies
-app.use(express.static(path.join(__dirname, '../frontend'))); // Serve the frontend files
 
+// ✅ Serve frontend files (make sure "Frontend" matches your folder name exactly!)
+app.use(express.static(path.resolve(__dirname, '../Frontend')));
 
 let topicsCache = null;
 
-
+// --- Load topics.json into memory ---
 async function loadTopicsFromFile() {
     try {
         const data = await fs.readFile(path.join(__dirname, 'topics.json'), 'utf-8');
@@ -27,9 +28,6 @@ async function loadTopicsFromFile() {
         console.error('Failed to load topics.json:', error);
     }
 }
-
-
-
 
 /**
  * @route   GET /api/topics
@@ -50,7 +48,6 @@ app.get('/api/topics', (req, res) => {
  * @access  Public
  */
 app.post('/api/run', async (req, res) => {
-    
     const { language_id, code, stdin } = req.body;
 
     if (!language_id || code === undefined) {
@@ -63,7 +60,7 @@ app.post('/api/run', async (req, res) => {
 
     if (!JUDGE0_API_KEY) {
         console.error("FATAL ERROR: Judge0 API key is not set in the .env file.");
-        process.exit(1); // Stop the application if the key is missing
+        process.exit(1); 
     }
 
     const options = {
@@ -95,8 +92,12 @@ app.post('/api/run', async (req, res) => {
     }
 });
 
+// ✅ Catch-all: send index.html for frontend routes
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../Frontend/index.html'));
+});
+
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-    // Load topics into memory when the server starts
+    console.log(`✅ Server running on http://localhost:${PORT}`);
     loadTopicsFromFile();
 });
