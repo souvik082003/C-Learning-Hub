@@ -73,11 +73,14 @@ Contributions are welcome!
 
 Fork the repo 🍴
 
-Create a new branch: git checkout -b feature-xyz
+---
 
-Commit changes: git commit -m "Added feature xyz"
+## 📄 License
+
+This project is licensed under the MIT License.
 
 Push: git push origin feature-xyz
 
 Open a Pull Request ✅
+
 
