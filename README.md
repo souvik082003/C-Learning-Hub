@@ -41,7 +41,8 @@ Supports both **C and C++** with quick example switching and live execution.
 - Pointers
 - Structures
 - Recursion
-- C vs C++ syntax comparison
+
+
 
 
 
